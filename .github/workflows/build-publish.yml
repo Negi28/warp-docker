@@ -79,6 +79,7 @@ jobs:
             GOST_VERSION=${{ steps.get-gost-version.outputs.GOST_VERSION }}
             WARP_VERSION=${{ steps.get-warp-client-version.outputs.WARP_VERSION }}
             COMMIT_SHA=${{ github.sha }}
+            TZ=Asia/Seoul
             BASE_IMAGE=debian:bookworm-slim
           context: .
           platforms: linux/amd64,linux/arm64

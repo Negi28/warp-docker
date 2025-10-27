@@ -16,6 +16,16 @@ LABEL COMMIT_SHA=${COMMIT_SHA}
 COPY entrypoint.sh /entrypoint.sh
 COPY ./healthcheck /healthcheck
 
+# Chọn timezone
+ARG TZ=Asia/Seoul
+ENV TZ=${TZ}
+
+# Cài tzdata và thiết lập timezone
+RUN apt-get update && \
+    apt-get install -y tzdata && \
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+    echo $TZ > /etc/timezone
+
 # install dependencies
 RUN case ${TARGETPLATFORM} in \
       "linux/amd64")   export ARCH="amd64" ;; \
