@@ -19,15 +19,13 @@ COPY ./healthcheck /healthcheck
 # Chọn timezone
 ARG TZ=Asia/Seoul
 ENV TZ=${TZ}
-ENV DEBIAN_FRONTEND=noninteractive
 
-# Cài tzdata và thiết lập timezone
 RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive \
     apt-get install -y tzdata && \
-    ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && \
-    echo "$TZ" > /etc/timezone && \
-    dpkg-reconfigure -f noninteractive tzdata && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+    echo $TZ > /etc/timezone && \
+    dpkg-reconfigure -f noninteractive tzdata
 
 # install dependencies
 RUN case ${TARGETPLATFORM} in \
