@@ -16,6 +16,8 @@ LABEL COMMIT_SHA=${COMMIT_SHA}
 COPY entrypoint.sh /entrypoint.sh
 COPY ./healthcheck /healthcheck
 
+fsfsfsfsfsf
+
 # Chọn timezone
 ARG TZ=Asia/Seoul
 ENV TZ=${TZ}
