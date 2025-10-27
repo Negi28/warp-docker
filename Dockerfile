@@ -22,7 +22,7 @@ ENV TZ=${TZ}
 
 # Cài tzdata và thiết lập timezone
 RUN apt-get update && \
-    apt-get install -y tzdata && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata && \
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     echo $TZ > /etc/timezone
 
