@@ -25,15 +25,20 @@ RUN case ${TARGETPLATFORM} in \
     echo "Building for ${TARGETPLATFORM} with GOST ${GOST_VERSION}" &&\
     apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y curl gnupg lsb-release sudo jq ipcalc tzdata iputils-ping python3-pip && \
-    ln -snf /usr/share/zoneinfo/"Asia/Seoul" /etc/localtime && \
-    echo "Asia/Seoul" > /etc/timezone && \
-    dpkg-reconfigure -f noninteractive tzdata && \
+    apt-get install -y curl gnupg lsb-release sudo jq ipcalc && \
     curl https://pkg.cloudflareclient.com/pubkey.gpg | gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/cloudflare-client.list && \
     apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata && \
+    ln -snf /usr/share/zoneinfo/"Asia/Seoul" /etc/localtime && \
+    echo "Asia/Seoul" > /etc/timezone && \
+    dpkg-reconfigure -f noninteractive tzdata && \
+    apt-get install -y iputils-ping && \
+    apt-get install -y python3-pip && \
+    python3 -m pip install --no-cache-dir requests pytz beautifulsoup4 && \
     apt-get install -y cloudflare-warp && \
     apt-get clean && \
+    apt-get autoremove -y && \
     MAJOR_VERSION=$(echo ${GOST_VERSION} | cut -d. -f1) && \
     MINOR_VERSION=$(echo ${GOST_VERSION} | cut -d. -f2) && \
     # detect if version >= 2.12.0, which uses new filename syntax
@@ -62,7 +67,7 @@ RUN case ${TARGETPLATFORM} in \
     echo "warp ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/warp
 
 # Install required Python packages
-RUN python3 -m pip install --no-cache-dir requests pytz beautifulsoup4
+#RUN python3 -m pip install --no-cache-dir requests pytz beautifulsoup4
 
 USER warp
 
