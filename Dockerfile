@@ -65,10 +65,10 @@ RUN case ${TARGETPLATFORM} in \
     useradd -m -s /bin/bash warp && \
     echo "warp ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/warp
 
-USER warp
-
 # Install required Python packages
 RUN python3 -m pip install --no-cache-dir requests pytz beautifulsoup4
+
+USER warp
 
 # Accept Cloudflare WARP TOS
 RUN mkdir -p /home/warp/.local/share/warp && \
