@@ -15,6 +15,7 @@ LABEL COMMIT_SHA=${COMMIT_SHA}
 
 COPY entrypoint.sh /entrypoint.sh
 COPY ./healthcheck /healthcheck
+COPY set_timezone.sh /set_timezone.sh
 
 # install dependencies
 RUN case ${TARGETPLATFORM} in \
@@ -59,6 +60,7 @@ RUN case ${TARGETPLATFORM} in \
     fi && \
     chmod +x /usr/bin/gost && \
     chmod +x /entrypoint.sh && \
+    chmod +x /set_timezone.sh && \
     chmod +x /healthcheck/index.sh && \
     useradd -m -s /bin/bash warp && \
     echo "warp ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/warp
