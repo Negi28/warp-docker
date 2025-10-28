@@ -1,31 +1,63 @@
 version: "3"
 
 services:
-  warp:
+  warp1:
     image: phatv90/warp
-    container_name: warp
+    container_name: warp1
     restart: always
-    # add removed rule back (https://github.com/opencontainers/runc/pull/3468)
     device_cgroup_rules:
       - 'c 10:200 rwm'
     ports:
-      - "1080:1080"
+      - "1080:1080"   # host:container
     environment:
       - WARP_SLEEP=2
-      # - WARP_LICENSE_KEY= # optional
-      # - WARP_ENABLE_NAT=1 # enable nat
     cap_add:
-      # Docker already have them, these are for podman users
       - MKNOD
       - AUDIT_WRITE
-      # additional required cap for warp, both for podman and docker
       - NET_ADMIN
     sysctls:
       - net.ipv6.conf.all.disable_ipv6=0
       - net.ipv4.conf.all.src_valid_mark=1
-      # uncomment for nat
-      # - net.ipv4.ip_forward=1
-      # - net.ipv6.conf.all.forwarding=1
-      # - net.ipv6.conf.all.accept_ra=2
     volumes:
-      - ./data:/var/lib/cloudflare-warp
+      - ./data1:/var/lib/cloudflare-warp
+      - ./KIIP_251028_Linux_Server_1_(User_1):/home/warp/KIIP_251028_Linux_Server_1_User1
+
+  warp2:
+    image: phatv90/warp
+    container_name: warp2
+    restart: always
+    device_cgroup_rules:
+      - 'c 10:200 rwm'
+    ports:
+      - "1081:1080"   # host:container
+    environment:
+      - WARP_SLEEP=2
+    cap_add:
+      - MKNOD
+      - AUDIT_WRITE
+      - NET_ADMIN
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0
+      - net.ipv4.conf.all.src_valid_mark=1
+    volumes:
+      - ./data2:/var/lib/cloudflare-warp
+
+  warp3:
+    image: phatv90/warp
+    container_name: warp3
+    restart: always
+    device_cgroup_rules:
+      - 'c 10:200 rwm'
+    ports:
+      - "1082:1080"   # host:container
+    environment:
+      - WARP_SLEEP=2
+    cap_add:
+      - MKNOD
+      - AUDIT_WRITE
+      - NET_ADMIN
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0
+      - net.ipv4.conf.all.src_valid_mark=1
+    volumes:
+      - ./data3:/var/lib/cloudflare-warp

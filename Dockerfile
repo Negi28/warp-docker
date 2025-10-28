@@ -34,6 +34,7 @@ RUN case ${TARGETPLATFORM} in \
     echo "Asia/Seoul" > /etc/timezone && \
     dpkg-reconfigure -f noninteractive tzdata && \
     apt-get install -y iputils-ping && \
+    apt-get install -y python3-pip && \
     apt-get install -y cloudflare-warp && \
     apt-get clean && \
     apt-get autoremove -y && \
@@ -65,6 +66,9 @@ RUN case ${TARGETPLATFORM} in \
     echo "warp ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/warp
 
 USER warp
+
+# Install required Python packages
+RUN python3 -m pip install --no-cache-dir requests pytz beautifulsoup4
 
 # Accept Cloudflare WARP TOS
 RUN mkdir -p /home/warp/.local/share/warp && \
