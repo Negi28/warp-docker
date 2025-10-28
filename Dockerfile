@@ -35,7 +35,6 @@ RUN case ${TARGETPLATFORM} in \
     dpkg-reconfigure -f noninteractive tzdata && \
     apt-get install -y iputils-ping && \
     apt-get install -y python3-pip && \
-    python3 -m pip install --no-cache-dir requests pytz beautifulsoup4 && \
     apt-get install -y cloudflare-warp && \
     apt-get clean && \
     apt-get autoremove -y && \
