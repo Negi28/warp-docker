@@ -15,7 +15,6 @@ LABEL COMMIT_SHA=${COMMIT_SHA}
 
 COPY entrypoint.sh /entrypoint.sh
 COPY ./healthcheck /healthcheck
-COPY set_timezone.sh /set_timezone.sh
 
 # install dependencies
 RUN case ${TARGETPLATFORM} in \
@@ -30,6 +29,10 @@ RUN case ${TARGETPLATFORM} in \
     curl https://pkg.cloudflareclient.com/pubkey.gpg | gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/cloudflare-client.list && \
     apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata && \
+    ln -snf /usr/share/zoneinfo/"Asia/Seoul" /etc/localtime && \
+    echo "Asia/Seoul" > /etc/timezone && \
+    dpkg-reconfigure -f noninteractive tzdata && \
     apt-get install -y iputils-ping && \
     apt-get install -y cloudflare-warp && \
     apt-get clean && \
@@ -57,7 +60,6 @@ RUN case ${TARGETPLATFORM} in \
     fi && \
     chmod +x /usr/bin/gost && \
     chmod +x /entrypoint.sh && \
-    chmod +x /set_timezone.sh && \
     chmod +x /healthcheck/index.sh && \
     useradd -m -s /bin/bash warp && \
     echo "warp ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/warp

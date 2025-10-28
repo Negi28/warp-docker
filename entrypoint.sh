@@ -3,9 +3,6 @@
 # exit when any command fails
 set -e
 
-# Set timezone tự động
-/set_timezone.sh
-
 # create a tun device if not exist
 # allow passing device to ensure compatibility with Podman
 if [ ! -e /dev/net/tun ]; then
