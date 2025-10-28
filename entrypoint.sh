@@ -80,3 +80,6 @@ fi
 # start the proxy
 gost $GOST_ARGS
 
+# forward any CMD from compose file
+exec "$@"
+
