@@ -21,6 +21,9 @@ services:
     volumes:
       - ./data1:/var/lib/cloudflare-warp
       - ./KIIP_251028_Linux_Server_1_(User_1):/home/warp/KIIP_251028_Linux_Server_1_User1
+    # command: ["/home/warp/KIIP_251028_Linux_Server_1_User1/run.sh"]
+    # command: ["sh", "-c", "/home/warp/KIIP_251028_Linux_Server_1_User1/run.sh"]
+    # entrypoint: ["sh", "-c", "/home/warp/KIIP_251028_Linux_Server_1_User1/run.sh"]   # run script as entry
 
   warp2:
     image: phatv90/warp
