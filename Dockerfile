@@ -71,7 +71,7 @@ RUN python3 -m venv /opt/venv --without-pip
 ENV PATH="/opt/venv/bin:$PATH"
 RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python
 RUN pip install --upgrade pip setuptools wheel
-RUN pip install --no-cache-dir requests pytz beautifulsoup4 playwright
+RUN pip install --no-cache-dir requests pytz beautifulsoup4
 RUN rm -rf /var/lib/apt/lists/*
 
 USER warp
