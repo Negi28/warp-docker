@@ -70,10 +70,10 @@ RUN case ${TARGETPLATFORM} in \
     useradd -m -s /bin/bash warp && \
     echo "warp ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/warp
 
+#Install libraries for playwright 
+RUN apt-get install -y libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libgtk-3-0 libpango-1.0-0 libpangocairo-1.0-0 libasound2
+
 USER warp
-
-
-
 # Accept Cloudflare WARP TOS
 RUN mkdir -p /home/warp/.local/share/warp && \
     echo -n 'yes' > /home/warp/.local/share/warp/accepted-tos.txt
