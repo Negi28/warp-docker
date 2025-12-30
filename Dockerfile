@@ -72,16 +72,16 @@ ENV PATH="/opt/venv/bin:$PATH"
 RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python
 RUN pip install --upgrade pip setuptools wheel
 RUN pip install --no-cache-dir requests pytz beautifulsoup4 playwright
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+RUN playwright install chromium && \
+    chmod -R 755 /ms-playwright
 RUN rm -rf /var/lib/apt/lists/*
 
 USER warp
 # Accept Cloudflare WARP TOS
 RUN mkdir -p /home/warp/.local/share/warp && \
     echo -n 'yes' > /home/warp/.local/share/warp/accepted-tos.txt
-
-#Install playwright with user warp
-RUN playwright install
-
+    
 ENV GOST_ARGS="-L :1080"
 ENV WARP_SLEEP=2
 ENV REGISTER_WHEN_MDM_EXISTS=
