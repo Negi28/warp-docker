@@ -67,9 +67,12 @@ RUN case ${TARGETPLATFORM} in \
 
 #Install libraries for playwright 
 RUN apt-get install -y libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libgtk-3-0 libpango-1.0-0 libpangocairo-1.0-0 libasound2
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+RUN pip install --upgrade pip setuptools wheel
 RUN pip install --no-cache-dir requests pytz beautifulsoup4 playwright
-#RUN playwright install chromium
-#RUN rm -rf /var/lib/apt/lists/*
+RUN playwright install chromium
+RUN rm -rf /var/lib/apt/lists/*
 
 USER warp
 # Accept Cloudflare WARP TOS
