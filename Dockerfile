@@ -36,13 +36,13 @@ RUN case ${TARGETPLATFORM} in \
     apt-get install -y iputils-ping && \
     apt-get install -y python3-pip && \
     apt-get install -y cloudflare-warp && \
-    echo "Install libraries for Playwright" && \
-    apt-get install -y libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libgtk-3-0 libpango-1.0-0 libpangocairo-1.0-0 libasound2 && \
+    #echo "Install libraries for Playwright" && \
+    #apt-get install -y libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libgtk-3-0 libpango-1.0-0 libpangocairo-1.0-0 libasound2 && \
     #pip3 install --no-cache-dir requests pytz beautifulsoup4 playwright && \
     # Finish install libraris for playwright
     apt-get clean && \
     apt-get autoremove -y && \
-    rm -rf /var/lib/apt/lists/* && \
+    #rm -rf /var/lib/apt/lists/* && \
     MAJOR_VERSION=$(echo ${GOST_VERSION} | cut -d. -f1) && \
     MINOR_VERSION=$(echo ${GOST_VERSION} | cut -d. -f2) && \
     # detect if version >= 2.12.0, which uses new filename syntax
