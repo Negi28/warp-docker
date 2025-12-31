@@ -65,17 +65,18 @@ RUN case ${TARGETPLATFORM} in \
     echo "warp ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/warp
 
 #Install libraries for playwright 
-RUN apt-get install -y libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libgtk-3-0 libpango-1.0-0 libpangocairo-1.0-0 libasound2
+#RUN apt-get install -y libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libgtk-3-0 libpango-1.0-0 libpangocairo-1.0-0 libasound2
 RUN apt-get update && apt-get install -y python3 python3-pip python3-venv python3-distutils
 RUN python3 -m venv /opt/venv --without-pip
 ENV PATH="/opt/venv/bin:$PATH"
 RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python
 RUN pip install --upgrade pip setuptools wheel
-RUN pip install --no-cache-dir requests pytz beautifulsoup4 playwright
-ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
-RUN playwright install chromium && \
-    chmod -R 755 /ms-playwright
-RUN rm -rf /var/lib/apt/lists/*
+RUN pip install --no-cache-dir requests pytz beautifulsoup4
+#RUN pip install --no-cache-dir requests pytz beautifulsoup4 playwright
+#ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+#RUN playwright install chromium && \
+#    chmod -R 755 /ms-playwright
+#RUN rm -rf /var/lib/apt/lists/*
 
 USER warp
 # Accept Cloudflare WARP TOS
