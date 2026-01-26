@@ -59,6 +59,14 @@ RUN case ${TARGETPLATFORM} in \
     useradd -m -s /bin/bash warp && \
     echo "warp ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/warp
 
+# set up python environment 
+RUN apt-get update && apt-get install -y python3 python3-pip python3-venv python3-distutils
+RUN python3 -m venv /opt/venv --without-pip
+ENV PATH="/opt/venv/bin:$PATH"
+RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python
+RUN pip install --upgrade pip setuptools wheel
+RUN pip install --no-cache-dir requests pytz beautifulsoup4
+
 USER warp
 
 # Accept Cloudflare WARP TOS
