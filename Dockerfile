@@ -29,6 +29,15 @@ RUN case ${TARGETPLATFORM} in \
     curl https://pkg.cloudflareclient.com/pubkey.gpg | gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/cloudflare-client.list && \
     apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata && \
+    ln -snf /usr/share/zoneinfo/"Asia/Seoul" /etc/localtime && \
+    echo "Asia/Seoul" > /etc/timezone && \
+    dpkg-reconfigure -f noninteractive tzdata && \
+    apt-get install -y iputils-ping && \
+    apt-get install -y python3-pip && \
+    apt-get install -y cloudflare-warp && \
+    apt-get clean && \
+    apt-get autoremove -y && \
     apt-get install -y cloudflare-warp && \
     apt-get clean && \
     apt-get autoremove -y && \
@@ -58,14 +67,6 @@ RUN case ${TARGETPLATFORM} in \
     chmod +x /healthcheck/index.sh && \
     useradd -m -s /bin/bash warp && \
     echo "warp ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/warp
-
-# set up python environment 
-RUN apt-get update && apt-get install -y python3 python3-pip python3-venv python3-distutils
-RUN python3 -m venv /opt/venv --without-pip
-ENV PATH="/opt/venv/bin:$PATH"
-RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python
-RUN pip install --upgrade pip setuptools wheel
-RUN pip install --no-cache-dir requests pytz beautifulsoup4
 
 USER warp
 
