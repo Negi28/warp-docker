@@ -81,7 +81,7 @@ fi
 # start the proxy
 gost $GOST_ARGS &
 
-sleep 1
+sleep 10
 echo "[ENTRYPOINT] gost started"
 
 echo "[ENTRYPOINT] exec CMD: $@"
