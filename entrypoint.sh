@@ -3,6 +3,9 @@
 # exit when any command fails
 set -e
 
+#Install required Python packages
+sudo python3 -m pip install --no-cache-dir requests pytz beautifulsoup4
+
 # create a tun device if not exist
 # allow passing device to ensure compatibility with Podman
 if [ ! -e /dev/net/tun ]; then
