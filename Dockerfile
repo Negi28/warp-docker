@@ -70,9 +70,6 @@ RUN case ${TARGETPLATFORM} in \
 
 USER warp
 
-#Install required Python packages
-sudo python3 -m pip install --no-cache-dir requests pytz beautifulsoup4
-
 # Accept Cloudflare WARP TOS
 RUN mkdir -p /home/warp/.local/share/warp && \
     echo -n 'yes' > /home/warp/.local/share/warp/accepted-tos.txt
