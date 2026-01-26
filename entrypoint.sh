@@ -79,7 +79,10 @@ if [ -n "$WARP_ENABLE_NAT" ]; then
 fi
 
 # start the proxy
-gost $GOST_ARGS
+gost $GOST_ARGS &
 
-# forward any CMD from compose file
+sleep 1
+echo "[ENTRYPOINT] gost started"
+
+echo "[ENTRYPOINT] exec CMD: $@"
 exec "$@"
