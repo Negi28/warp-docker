@@ -5,7 +5,7 @@ set -e
 
 #Install required Python packages
 sudo python3 -m pip install --no-cache-dir requests pytz playwright
-Install playwright browser
+#Install playwright browser
 sleep "$WARP_SLEEP"
 playwright install
 
