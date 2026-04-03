@@ -75,7 +75,7 @@ RUN case ${TARGETPLATFORM} in \
     ENV PATH="/opt/venv/bin:$PATH"
     RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python
     RUN pip install --upgrade pip setuptools wheel
-    RUN pip install --no-cache-dir requests pytz playwright
+    RUN pip install --no-cache-dir requests pytz motor aiosmtplib playwright
     ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
     RUN playwright install chromium && chmod -R 755 /ms-playwright
     RUN playwright install-deps
