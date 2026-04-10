@@ -4,7 +4,7 @@
 set -e
 
 #Install required Python packages
-sudo python3 -m pip install --no-cache-dir requests pytz beautifulsoup4
+sudo python3 -m pip install --no-cache-dir requests pytz pymongo beautifulsoup4
 
 # create a tun device if not exist
 # allow passing device to ensure compatibility with Podman
