@@ -87,5 +87,11 @@ gost $GOST_ARGS &
 sleep 10
 echo "[ENTRYPOINT] gost started"
 
+# disconnect warp unless explicitly enabled via ENABLE_WARP
+if [ "$ENABLE_WARP" = "false" ]; then
+    echo "[ENTRYPOINT] ENABLE_WARP=false, disconnecting warp..."
+    warp-cli --accept-tos disconnect
+fi
+
 echo "[ENTRYPOINT] exec CMD: $@"
 exec "$@"
